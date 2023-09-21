@@ -28,16 +28,21 @@ import sys
   		  	   		  		 		  		  		    	 		 		   		 		  
 import numpy as np  		  	   		  		 		  		  		    	 		 		   		 		  
   		  	   		  		 		  		  		    	 		 		   		 		  
-import LinRegLearner as lrl  		  	   		  		 		  		  		    	 		 		   		 		  
+import LinRegLearner as lrl  		
+import DTLearner as dtl
+import RTLearner as rtl
+import BagLearner as bl
+import InsaneLearner as il  		  	   		  		 		  		  		    	 		 		   		 		  
+  	   		  		 		  		  		    	 		 		   		 		  
   		  	   		  		 		  		  		    	 		 		   		 		  
 if __name__ == "__main__":  		  	   		  		 		  		  		    	 		 		   		 		  
     if len(sys.argv) != 2:  		  	   		  		 		  		  		    	 		 		   		 		  
         print("Usage: python testlearner.py <filename>")  		  	   		  		 		  		  		    	 		 		   		 		  
         sys.exit(1)  		  	   		  		 		  		  		    	 		 		   		 		  
     inf = open(sys.argv[1])  		  	   		  		 		  		  		    	 		 		   		 		  
-    data = np.array(  		  	   		  		 		  		  		    	 		 		   		 		  
-        [list(map(float, s.strip().split(","))) for s in inf.readlines()]  		  	   		  		 		  		  		    	 		 		   		 		  
-    )  		  	   		  		 		  		  		    	 		 		   		 		  
+    data = np.array([list(map(float, s.strip().split(",")[1:])) for s in inf.readlines()[1:]]  		  	   		  		 		  		  		    	 		 		   		 		  
+    )  		  	   		  		 		  		  		    
+    print(data)	 		 		   		 		  
   		  	   		  		 		  		  		    	 		 		   		 		  
     # compute how much of the data is training and testing  		  	   		  		 		  		  		    	 		 		   		 		  
     train_rows = int(0.6 * data.shape[0])  		  	   		  		 		  		  		    	 		 		   		 		  
@@ -50,7 +55,9 @@ if __name__ == "__main__":
     test_y = data[train_rows:, -1]  		  	   		  		 		  		  		    	 		 		   		 		  
   		  	   		  		 		  		  		    	 		 		   		 		  
     print(f"{test_x.shape}")  		  	   		  		 		  		  		    	 		 		   		 		  
-    print(f"{test_y.shape}")  		  	   		  		 		  		  		    	 		 		   		 		  
+    print(f"{test_y.shape}") 
+      		 		  		  		 
+   	 		   		 		  
   		  	   		  		 		  		  		    	 		 		   		 		  
     # create a learner and train it  		  	   		  		 		  		  		    	 		 		   		 		  
     learner = lrl.LinRegLearner(verbose=True)  # create a LinRegLearner  		  	   		  		 		  		  		    	 		 		   		 		  
@@ -73,4 +80,18 @@ if __name__ == "__main__":
     print("Out of sample results")  		  	   		  		 		  		  		    	 		 		   		 		  
     print(f"RMSE: {rmse}")  		  	   		  		 		  		  		    	 		 		   		 		  
     c = np.corrcoef(pred_y, y=test_y)  		  	   		  		 		  		  		    	 		 		   		 		  
-    print(f"corr: {c[0,1]}")  		  	   		  		 		  		  		    	 		 		   		 		  
+    print(f"corr: {c[0,1]}")  	
+    
+    
+    DTlearner = dtl.DTLearner(leaf_size = 1, verbose = False)  # create a DTLearner  		  	   		  		 		  		  		    	 		 		   		 		  
+    DTlearner.add_evidence(train_x, train_y)  # train it  		  	   		  		 		  		  		    	 		 		   		 		  
+    print(DTlearner.author())     
+    pred_y_DT_Learner = DTlearner.query(train_x)  # get the predictions  		
+    print("DT Learner",pred_y_DT_Learner)
+        
+    RTlearner = rtl.RTLearner(leaf_size = 1, verbose = False)  # create a DTLearner  		  	   		  		 		  		  		    	 		 		   		 		  
+    RTlearner.add_evidence(train_x, train_y)  # train it  		  	   		  		 		  		  		    	 		 		   		 		  
+    print(RTlearner.author())     
+    pred_y_RT_Learner = RTlearner.query(train_x)  # get the predictions  	
+    print("RT Learner", pred_y_RT_Learner)
+	 		  	   		  		 		  		  		    	 		 		   		 		  

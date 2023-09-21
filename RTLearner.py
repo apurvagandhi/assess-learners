@@ -1,6 +1,6 @@
 import numpy as np  
 
-class DTLearner(object):  		  	   		  		 		  		  		    	 		 		   		 		  
+class RTLearner(object):  		  	   		  		 		  		  		    	 		 		   		 		  
     """  		  	   		  		 		  		  		    	 		 		   		 		  
     This is a Linear Regression Learner. It is implemented correctly.  		  	   		  		 		  		  		    	 		 		   		 		  
   		  	   		  		 		  		  		    	 		 		   		 		  
@@ -43,16 +43,13 @@ class DTLearner(object):
             return np.array([['leaf', np.mean(data_y), None, None]])
         elif np.all(data_y == data_y[0]):
             return np.array([['leaf', data_y[0], None, None]])
-        else: 
-            # Calculate correlation coefficients between Y and each feature column
-            correlations = np.abs(np.corrcoef(data_x, data_y, rowvar=False)[:-1, -1])
-            # Find the index of the feature with the highest absolute correlation
-            best_feature_index = np.argmax(correlations)
+        else:           
+            random_feature = np.random.randint(data.shape[1]-1)
             # Get the name or label of the best feature
-            splitVal = np.median(data[:, best_feature_index])
-            left_tree = self.build_tree(data[data[:, best_feature_index] <= splitVal])
-            right_tree = self.build_tree(data[data[:, best_feature_index] > splitVal])
-            root = np.array([[best_feature_index, splitVal, 1, left_tree.shape[0] + 1]])
+            splitVal = np.median(data[:, random_feature])
+            left_tree = self.build_tree(data[data[:, random_feature] <= splitVal])
+            right_tree = self.build_tree(data[data[:, random_feature] > splitVal])
+            root = np.array([[random_feature, splitVal, 1, left_tree.shape[0] + 1]])
             return np.append(root, np.append(left_tree, right_tree, axis=0), axis=0)         
   		  	   		  		 		  		  		    	 		 		   		 		  
     def query(self, features):  		  	   		  		 		  		  		    	 		 		   		 		  
@@ -82,4 +79,4 @@ class DTLearner(object):
     	    	 		 		   		 		  
   		  	   		  		 		  		  		    	 		 		   		 		  
 if __name__ == "__main__":  		  	   		  		 		  		  		    	 		 		   		 		  
-    print("Running DT Learner")  		  	   		  		 		  		  		    	 		 		   		 		  
+    print("Running RT Learner")  		  	   		  		 		  		  		    	 		 		   		 		  
