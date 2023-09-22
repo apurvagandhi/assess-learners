@@ -1,8 +1,9 @@
+import random
 import numpy as np  
 
 class BagLearner(object):  		  	   		  		 		  		  		    	 		 		   		 		  
     """  		  	   		  		 		  		  		    	 		 		   		 		  
-    This is a Linear Regression Learner. It is implemented correctly.  		  	   		  		 		  		  		    	 		 		   		 		  
+    This is a Bag Regression Learner. It is implemented correctly.  		  	   		  		 		  		  		    	 		 		   		 		  
   		  	   		  		 		  		  		    	 		 		   		 		  
     :param verbose: If “verbose” is True, your code can print out information for debugging.  		  	   		  		 		  		  		    	 		 		   		 		  
         If verbose = False your code should not generate ANY output. When we test your code, verbose will be False.  		  	   		  		 		  		  		    	 		 		   		 		  
@@ -11,13 +12,22 @@ class BagLearner(object):
     def __init__(self, learner, kwargs = {}, bags = 20, boost = False, verbose = False):  		  	   		  		 		  		  		    	 		 		   		 		  
         """  		  	   		  		 		  		  		    	 		 		   		 		  
         Constructor method  		  	   		  		 		  		  		    	 		 		   		 		  
-        """  		  	   	
+        """  		  	
+        # The learner points to the learning class that will be used in the BagLearner   	
         self.learner = learner
+        #  keyword arguments that are passed on to the learner’s constructor and they can vary according to the learner
         self.kwargs = kwargs
+        # number of learners you should train using Bootstrap Aggregation. 
         self.bags = bags
         self.boost = boost
+        # generate output if true
         self.vrbose = verbose
-           		  	   		  		 		  		  		    	 		 		   		 		  
+        # creating an instance of a learner object using the keyword arguments provided in kwargs 
+        # and then appending that learner object to the learners list.
+        self.learners = []
+        for i in range(bags):
+            self.learners.append(self.learner(**self.kwargs))	   		
+          		 		  		  		    	 		 		   		 		  
     def author(self):  		  	   		  		 		  		  		    	 		 		   		 		  
         """  		  	   		  		 		  		  		    	 		 		   		 		  
         :return: The GT username of the student  		  	   		  		 		  		  		    	 		 		   		 		  
@@ -34,11 +44,16 @@ class BagLearner(object):
         :param data_y: The value we are attempting to predict given the X data  		  	   		  		 		  		  		    	 		 		   		 		  
         :type data_y: numpy.ndarray  		  	   		  		 		  		  		    	 		 		   		 		  
         """
-        data_y = np.array([data_y])
-        data = np.append(data_x, data_y.T, axis=1)
-        self.tree = self.build_tree(data)	  		 		  		  		    	 		 		   		 		       
-  		  	   		  		 		  		  		    	 		 		   		 		  
-    def query(self, features):  		  	   		  		 		  		  		    	 		 		   		 		  
+        for learner in self.learners:
+            # Generate a list of random numbers between 0 and the number of columns in a 2D array
+            random_numbers = [random.randint(0, data_x.shape[0] - 1) for _ in range(data_x.shape[0])]
+            # Get the bag x data as per the randomized numbers
+            self.bag_x = data_x[random_numbers]
+            self.bag_y = data_y[random_numbers]
+            # call learner with random x bag and random y bag data
+            learner.add_evidence(self.bag_x, self.bag_y)
+       	 		  		  		    	 		 		   		 		       	  		 		  		  		    	 		 		   		 		  
+    def query(self, points):  		  	   		  		 		  		  		    	 		 		   		 		  
         """  		  	   		  		 		  		  		    	 		 		   		 		  
         Estimate a set of test points given the model we built.  		  	   		  		 		  		  		    	 		 		   		 		  
   		  	   		  		 		  		  		    	 		 		   		 		  
@@ -47,24 +62,13 @@ class BagLearner(object):
         :return: The predicted result of the input data according to the trained model  		  	   		  		 		  		  		    	 		 		   		 		  
         :rtype: numpy.ndarray  		  	   		  		 		  		  		    	 		 		   		 		  
         """  		 
-        print(self.tree) 	
-        predicted_value = []
-        for feature in features:
-            print("****TEST")
-            print(feature)
-            row = 0
-            node = self.tree[row,0]
-            while (node != "leaf"): # if it is not a leaf node, enter loop
-                splitVal = self.tree[row, 1]
-                left = int(self.tree[row, 2])
-                right = int(self.tree[row, 3])
-                if(feature[int(node)] <= splitVal):
-                    row = row + left
-                else:
-                    row = row + right
-                node = self.tree[row,0]
-            predicted_value.append(self.tree[row,1])
-        return predicted_value
+        y_pred_results = []
+        # For each learner in the self.learners collection, it calls the query method of that learner with the provided points.
+        # The results of these queries are collected into a list and mean of that list is returned.
+        for learner in self.learners:
+            y_pred_results.append(learner.query(points))
+            
+        return np.mean(y_pred_results, axis = 0)
     	    	 		 		   		 		  
   		  	   		  		 		  		  		    	 		 		   		 		  
 if __name__ == "__main__":  		  	   		  		 		  		  		    	 		 		   		 		  

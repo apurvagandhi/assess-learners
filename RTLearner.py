@@ -2,7 +2,7 @@ import numpy as np
 
 class RTLearner(object):  		  	   		  		 		  		  		    	 		 		   		 		  
     """  		  	   		  		 		  		  		    	 		 		   		 		  
-    This is a Linear Regression Learner. It is implemented correctly.  		  	   		  		 		  		  		    	 		 		   		 		  
+    This is a Random Tree Regression Learner. It is implemented correctly.  		  	   		  		 		  		  		    	 		 		   		 		  
   		  	   		  		 		  		  		    	 		 		   		 		  
     :param verbose: If “verbose” is True, your code can print out information for debugging.  		  	   		  		 		  		  		    	 		 		   		 		  
         If verbose = False your code should not generate ANY output. When we test your code, verbose will be False.  		  	   		  		 		  		  		    	 		 		   		 		  
@@ -67,8 +67,6 @@ class RTLearner(object):
         print(self.tree) 	
         predicted_value = []
         for feature in features:
-            print("****TEST")
-            print(feature)
             row = 0
             node = self.tree[row,0]
             while (node != "leaf"): # if it is not a leaf node, enter loop

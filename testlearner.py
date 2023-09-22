@@ -90,20 +90,25 @@ if __name__ == "__main__":
     print(DTlearner.author())     
     pred_y_DT_Learner = DTlearner.query(train_x)  # get the predictions  		
     print("DT Learner",pred_y_DT_Learner)
-    
-
         
-    RTlearner = rtl.RTLearner(leaf_size = 1, verbose = False)  # create a DTLearner  		  	   		  		 		  		  		    	 		 		   		 		  
+    RTlearner = rtl.RTLearner(leaf_size = 1, verbose = False)  # create a RTLearner  		  	   		  		 		  		  		    	 		 		   		 		  
     RTlearner.add_evidence(train_x, train_y)  # train it  		  	   		  		 		  		  		    	 		 		   		 		  
     print(RTlearner.author())     
     pred_y_RT_Learner = RTlearner.query(train_x)  # get the predictions  	
     print("RT Learner", pred_y_RT_Learner)
     
-    Baglearner = bl.BagLearner(learner = dtl.DTLearner, kwargs = {"leaf_size":1}, bags = 20, boost = False, verbose = False)  # create a DTLearner  		  	   		  		 		  		  		    	 		 		   		 		  
+    Baglearner = bl.BagLearner(learner = dtl.DTLearner, kwargs = {"leaf_size":1}, bags = 20, boost = False, verbose = False)  # create a BagLearner  		  	   		  		 		  		  		    	 		 		   		 		  
     Baglearner.add_evidence(train_x, train_y)  # train it  		  	   		  		 		  		  		    	 		 		   		 		  
     print(Baglearner.author())     
     pred_y_Bag_Learner = Baglearner.query(train_x)  # get the predictions  	
     print("Bag Learner", pred_y_Bag_Learner)
+    
+    Insanelearner = il.InsaneLearner(verbose = False)  # create a Insane Learner  		  	   		  		 		  		  		    	 		 		   		 		  
+    Insanelearner.add_evidence(train_x, train_y)  # train it  		  	   		  		 		  		  		    	 		 		   		 		  
+    print(Insanelearner.author())     
+    pred_y_Insanelearner = Insanelearner.query(train_x)  # get the predictions  	
+    print("Insane Learner", pred_y_Insanelearner)
+    
     
     # #  -------------------------------- Create and Train DTlearner ---------------
 
