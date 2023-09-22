@@ -1,6 +1,6 @@
 import numpy as np  
 
-class DTLearner(object):  		  	   		  		 		  		  		    	 		 		   		 		  
+class DTLearner(object):	  	   		  		 		  		  		    	 		 		   		 		  
     """  		  	   		  		 		  		  		    	 		 		   		 		  
     This is a Linear Regression Learner. It is implemented correctly.  		  	   		  		 		  		  		    	 		 		   		 		  
   		  	   		  		 		  		  		    	 		 		   		 		  
@@ -31,25 +31,28 @@ class DTLearner(object):
         :param data_y: The value we are attempting to predict given the X data  		  	   		  		 		  		  		    	 		 		   		 		  
         :type data_y: numpy.ndarray  		  	   		  		 		  		  		    	 		 		   		 		  
         """
-        
-        data = np.column_stack((data_y, data_x))
+        data_y = np.array([data_y])
+        data = np.append(data_x, data_y.T, axis=1)
         self.tree = self.build_tree(data)
-    
+
     def build_tree(self, data):
-        #If there is only one row
-        data_x = data[:, 1:]
-        data_y = data[:, 0]
+        data_x = data[:, 0:-1]
+        data_y = data[:, -1]
         if data.shape[0] == 1 or data.shape[0] <= self.leaf_size:
             return np.array([['leaf', np.mean(data_y), None, None]])
         elif np.all(data_y == data_y[0]):
             return np.array([['leaf', data_y[0], None, None]])
         else: 
-            # Calculate correlation coefficients between Y and each feature column
-            correlations = np.abs(np.corrcoef(data_x, data_y, rowvar=False)[:-1, -1])
-            # Find the index of the feature with the highest absolute correlation
+            correlations = []
+            for feature in range(data_x.shape[1]):
+                correlations.append(abs(np.corrcoef(data_x[:, feature], data_y)[0, 1]))
             best_feature_index = np.argmax(correlations)
-            # Get the name or label of the best feature
             splitVal = np.median(data[:, best_feature_index])
+            maximum_value = np.max(data[:, best_feature_index])
+            
+            if maximum_value == splitVal:
+                return np.array([['leaf', np.mean(data[:, -1]), None, None]])
+            
             left_tree = self.build_tree(data[data[:, best_feature_index] <= splitVal])
             right_tree = self.build_tree(data[data[:, best_feature_index] > splitVal])
             root = np.array([[best_feature_index, splitVal, 1, left_tree.shape[0] + 1]])
@@ -78,8 +81,7 @@ class DTLearner(object):
                     row = row + right
                 node = self.tree[row,0]
             predicted_value.append(self.tree[row,1])
-        return predicted_value
-    	    	 		 		   		 		  
+        return predicted_value		 		   		 		  
   		  	   		  		 		  		  		    	 		 		   		 		  
 if __name__ == "__main__":  		  	   		  		 		  		  		    	 		 		   		 		  
     print("Running DT Learner")  		  	   		  		 		  		  		    	 		 		   		 		  

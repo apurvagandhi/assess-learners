@@ -24,7 +24,9 @@ GT honor code violation.
 """  		  	   		  		 		  		  		    	 		 		   		 		  
   		  	   		  		 		  		  		    	 		 		   		 		  
 import math  		  	   		  		 		  		  		    	 		 		   		 		  
-import sys  		  	   		  		 		  		  		    	 		 		   		 		  
+import sys
+import time
+from matplotlib import pyplot as plt  		  	   		  		 		  		  		    	 		 		   		 		  
   		  	   		  		 		  		  		    	 		 		   		 		  
 import numpy as np  		  	   		  		 		  		  		    	 		 		   		 		  
   		  	   		  		 		  		  		    	 		 		   		 		  
@@ -88,10 +90,88 @@ if __name__ == "__main__":
     print(DTlearner.author())     
     pred_y_DT_Learner = DTlearner.query(train_x)  # get the predictions  		
     print("DT Learner",pred_y_DT_Learner)
+    
+
         
     RTlearner = rtl.RTLearner(leaf_size = 1, verbose = False)  # create a DTLearner  		  	   		  		 		  		  		    	 		 		   		 		  
     RTlearner.add_evidence(train_x, train_y)  # train it  		  	   		  		 		  		  		    	 		 		   		 		  
     print(RTlearner.author())     
     pred_y_RT_Learner = RTlearner.query(train_x)  # get the predictions  	
     print("RT Learner", pred_y_RT_Learner)
+    
+    Baglearner = bl.BagLearner(learner = dtl.DTLearner, kwargs = {"leaf_size":1}, bags = 20, boost = False, verbose = False)  # create a DTLearner  		  	   		  		 		  		  		    	 		 		   		 		  
+    Baglearner.add_evidence(train_x, train_y)  # train it  		  	   		  		 		  		  		    	 		 		   		 		  
+    print(Baglearner.author())     
+    pred_y_Bag_Learner = Baglearner.query(train_x)  # get the predictions  	
+    print("Bag Learner", pred_y_Bag_Learner)
+    
+    # #  -------------------------------- Create and Train DTlearner ---------------
+
+    # # create a learner and train it
+    # learner = lrl.LinRegLearner(verbose=True)  # create a LinRegLearner
+    # learner = dtl.DTLearner(1, verbose=True)  # DTLearner
+    # learner.add_evidence(train_x, train_y)  # train it
+    # print(learner.author())
+
+    # # # evaluate in sample
+    # pred_y = learner.query(train_x)  # get the predictions
+    # rmse = math.sqrt(((train_y - pred_y) ** 2).sum() / train_y.shape[0])
+    # print()
+    # print("In sample results")
+    # print(f"RMSE: {rmse}")
+    # c = np.corrcoef(pred_y, y=train_y)
+    # print(f"corr: {c[0,1]}")
+
+    # # # evaluate out of sample
+    # pred_y = learner.query(test_x)  # get the predictions
+    # rmse = math.sqrt(((test_y - pred_y) ** 2).sum() / test_y.shape[0])
+    # print()
+    # print("Out of sample results")
+    # print(f"RMSE: {rmse}")
+    # c = np.corrcoef(pred_y, y=test_y)
+    # print(f"corr: {c[0,1]}")
+
+    # # ------- Experiment 1 and 3.1
+    # # initialize variables
+    # dt_insample_rmse_list = []
+    # dt_outsample_rmse_list = []
+    # dt_time_list = []
+    # dt_insample_std_list = []
+    # dt_outsample_std_list = []
+    # max_leafsize = 50
+
+    # # # Run DTLearner with different leaf_sizes
+    # for leafsize in range(max_leafsize):
+    #     start_time = time.time()
+    #     learner = dtl.DTLearner(leafsize, verbose=True)
+    #     learner.add_evidence(train_x, train_y)
+    #     end_time = time.time()
+    #     time_taken = end_time - start_time
+    #     dt_time_list.append(time_taken)
+
+    # #     # evaluate in sample
+    #     pred_y = learner.query(train_x)  # get the predictions
+    #     rmse = math.sqrt(((train_y - pred_y) ** 2).sum() / train_y.shape[0])
+    #     dt_insample_rmse_list.append(rmse)
+    #     dt_std = np.std(pred_y)
+    #     dt_insample_std_list.append(dt_std)
+
+    # #     # evaluate out of sample rmse & std
+    #     pred_y = learner.query(test_x)
+    #     rmse = math.sqrt(((test_y - pred_y) ** 2).sum() / test_y.shape[0])
+    #     dt_outsample_rmse_list.append(rmse)
+    #     dt_std = np.std(pred_y)
+    #     dt_outsample_std_list.append(dt_std)
+
+    # # # Plot rmse against leaf_size
+    # # # insample_rmse_list.plot()
+    # # # outsample_rmse_list.plot()
+    # plt.plot(dt_insample_rmse_list)
+    # plt.plot(dt_outsample_rmse_list)
+    # plt.xlabel('Leaf Size')
+    # plt.ylabel('RMSE')
+    # plt.legend(["Train RMSE", "Test RMSE"])
+    # plt.title('DTLearner RMSE using different Leaf Sizes')
+    # plt.savefig('Experiment1.png')
+    # plt.close()
 	 		  	   		  		 		  		  		    	 		 		   		 		  

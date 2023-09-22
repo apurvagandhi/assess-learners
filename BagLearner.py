@@ -1,6 +1,6 @@
 import numpy as np  
 
-class RTLearner(object):  		  	   		  		 		  		  		    	 		 		   		 		  
+class BagLearner(object):  		  	   		  		 		  		  		    	 		 		   		 		  
     """  		  	   		  		 		  		  		    	 		 		   		 		  
     This is a Linear Regression Learner. It is implemented correctly.  		  	   		  		 		  		  		    	 		 		   		 		  
   		  	   		  		 		  		  		    	 		 		   		 		  
@@ -8,11 +8,14 @@ class RTLearner(object):
         If verbose = False your code should not generate ANY output. When we test your code, verbose will be False.  		  	   		  		 		  		  		    	 		 		   		 		  
     :type verbose: bool  		  	   		  		 		  		  		    	 		 		   		 		  
     """  		  	   		  		 		  		  		    	 		 		   		 		  
-    def __init__(self, leaf_size = 1, verbose=False):  		  	   		  		 		  		  		    	 		 		   		 		  
+    def __init__(self, learner, kwargs = {}, bags = 20, boost = False, verbose = False):  		  	   		  		 		  		  		    	 		 		   		 		  
         """  		  	   		  		 		  		  		    	 		 		   		 		  
         Constructor method  		  	   		  		 		  		  		    	 		 		   		 		  
         """  		  	   	
-        self.leaf_size = leaf_size
+        self.learner = learner
+        self.kwargs = kwargs
+        self.bags = bags
+        self.boost = boost
         self.vrbose = verbose
            		  	   		  		 		  		  		    	 		 		   		 		  
     def author(self):  		  	   		  		 		  		  		    	 		 		   		 		  
@@ -33,27 +36,7 @@ class RTLearner(object):
         """
         data_y = np.array([data_y])
         data = np.append(data_x, data_y.T, axis=1)
-        self.tree = self.build_tree(data)
-
-    def build_tree(self, data):
-        data_y = data[:, -1]
-
-        if data.shape[0] == 1 or data.shape[0] <= self.leaf_size:
-            return np.array([['leaf', np.mean(data_y), None, None]])
-        elif np.all(data_y == data_y[0]):
-            return np.array([['leaf', data_y[0], None, None]])
-        else: 
-            random_feature = np.random.randint(data.shape[1]-1)
-            splitVal = np.median(data[:, random_feature])
-            maximum_value = max(data[:, random_feature])
-            
-            if maximum_value == splitVal:
-                return np.array([['leaf', np.mean(data[:, -1]), None, None]])
-            
-            left_tree = self.build_tree(data[data[:, random_feature] <= splitVal])
-            right_tree = self.build_tree(data[data[:, random_feature] > splitVal])
-            root = np.array([[random_feature, splitVal, 1, left_tree.shape[0] + 1]])
-            return np.append(root, np.append(left_tree, right_tree, axis=0), axis=0)      	  		 		  		  		    	 		 		   		 		       
+        self.tree = self.build_tree(data)	  		 		  		  		    	 		 		   		 		       
   		  	   		  		 		  		  		    	 		 		   		 		  
     def query(self, features):  		  	   		  		 		  		  		    	 		 		   		 		  
         """  		  	   		  		 		  		  		    	 		 		   		 		  
@@ -85,4 +68,4 @@ class RTLearner(object):
     	    	 		 		   		 		  
   		  	   		  		 		  		  		    	 		 		   		 		  
 if __name__ == "__main__":  		  	   		  		 		  		  		    	 		 		   		 		  
-    print("Running RT Learner")  		  	   		  		 		  		  		    	 		 		   		 		  
+    print("Running Bag Learner")  		  	   		  		 		  		  		    	 		 		   		 		  
