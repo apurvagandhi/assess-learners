@@ -64,7 +64,6 @@ class RTLearner(object):
         :return: The predicted result of the input data according to the trained model  		  	   		  		 		  		  		    	 		 		   		 		  
         :rtype: numpy.ndarray  		  	   		  		 		  		  		    	 		 		   		 		  
         """  		 
-        print(self.tree) 	
         predicted_value = []
         for feature in features:
             row = 0
