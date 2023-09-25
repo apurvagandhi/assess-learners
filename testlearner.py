@@ -22,21 +22,18 @@ GT honor code violation.
   		  	   		  		 		  		  		    	 		 		   		 		  
 -----do not edit anything above this line---  		  	   		  		 		  		  		    	 		 		   		 		  
 """  		  	   		  		 		  		  		    	 		 		   		 		  
-  		  	   		  		 		  		  		    	 		 		   		 		  
+	  	   		  		 		  		  		    	 		 		   		 		  
 import math
 import random  		  	   		  		 		  		  		    	 		 		   		 		  
 import sys
 import time
-from matplotlib import pyplot as plt  		  	   		  		 		  		  		    	 		 		   		 		  
-  		  	   		  		 		  		  		    	 		 		   		 		  
-import numpy as np  		  	   		  		 		  		  		    	 		 		   		 		  
-  		  	   		  		 		  		  		    	 		 		   		 		  
+from matplotlib import pyplot as plt  		  	   		  		 		  		  		    	 		 		   		 		    	   		  		 		  		  		    	 		 		   		 		  
+import numpy as np  		  	   		  		 		  		  		    	 		 		   		 		  	  	   		  		 		  		  		    	 		 		   		 		  
 import LinRegLearner as lrl  		
 import DTLearner as dtl
 import RTLearner as rtl
 import BagLearner as bl
-import InsaneLearner as il  		  	   		  		 		  		  		    	 		 		   		 		  
-  	   		  		 		  		  		    	 		 		   		 		  
+import InsaneLearner as il  		  	   		  		 		  		  		    	 		 		   		 		   		  		 		  		  		    	 		 		   		 		  
   		  	   		  		 		  		  		    	 		 		   		 		  
 if __name__ == "__main__":  		  	   		  		 		  		  		    	 		 		   		 		  
     if len(sys.argv) != 2:  		  	   		  		 		  		  		    	 		 		   		 		  
@@ -55,55 +52,7 @@ if __name__ == "__main__":
     train_y = data[random_row_indices[:number_of_train_rows], -1]  		  	   		  		 		  		  		    	 		 		   		 		  
     test_x = data[random_row_indices[number_of_test_rows:], 0:-1]  		  	   		  		 		  		  		    	 		 		   		 		  
     test_y = data[random_row_indices[number_of_test_rows:], -1]  		  	   		  		 		  		  		    	 		 		   		 		  
-  		  	   		  		 		  		  		    	 		 		   		 		      		 		  		  		  	   		  		 		  		  		    	 		 		   		 		  
-    # create a learner and train it  		  	   		  		 		  		  		    	 		 		   		 		  
-    # learner = lrl.LinRegLearner(verbose=True)  # create a LinRegLearner  		  	   		  		 		  		  		    	 		 		   		 		  
-    # learner.add_evidence(train_x, train_y)  # train it  		  	   		  		 		  		  		    	 		 		   		 		  
-    # print(learner.author())  		  	   		  		 		  		  		    	 		 		   		 		  
-  		  	   		  		 		  		  		    	 		 		   		 		  
-    # # evaluate in sample  		  	   		  		 		  		  		    	 		 		   		 		  
-    # pred_y = learner.query(train_x)  # get the predictions  		  	   		  		 		  		  		    	 		 		   		 		  
-    # rmse = math.sqrt(((train_y - pred_y) ** 2).sum() / train_y.shape[0])  		  	   		  		 		  		  		    	 		 		   		 		  
-    # print()  		  	   		  		 		  		  		    	 		 		   		 		  
-    # print("In sample results")  		  	   		  		 		  		  		    	 		 		   		 		  
-    # print(f"RMSE: {rmse}")  		  	   		  		 		  		  		    	 		 		   		 		  
-    # c = np.corrcoef(pred_y, y=train_y)  		  	   		  		 		  		  		    	 		 		   		 		  
-    # print(f"corr: {c[0,1]}")  		  	   		  		 		  		  		    	 		 		   		 		  
-  		  	   		  		 		  		  		    	 		 		   		 		  
-    # # evaluate out of sample  		  	   		  		 		  		  		    	 		 		   		 		  
-    # pred_y = learner.query(test_x)  # get the predictions  		  	   		  		 		  		  		    	 		 		   		 		  
-    # rmse = math.sqrt(((test_y - pred_y) ** 2).sum() / test_y.shape[0])  		  	   		  		 		  		  		    	 		 		   		 		  
-    # print()  		  	   		  		 		  		  		    	 		 		   		 		  
-    # print("Out of sample results")  		  	   		  		 		  		  		    	 		 		   		 		  
-    # print(f"RMSE: {rmse}")  		  	   		  		 		  		  		    	 		 		   		 		  
-    # c = np.corrcoef(pred_y, y=test_y)  		  	   		  		 		  		  		    	 		 		   		 		  
-    # print(f"corr: {c[0,1]}")  	
-    
-    
-    # DTlearner = dtl.DTLearner(leaf_size = 1, verbose = False)  # create a DTLearner  		  	   		  		 		  		  		    	 		 		   		 		  
-    # DTlearner.add_evidence(train_x, train_y)  # train it  		  	   		  		 		  		  		    	 		 		   		 		  
-    # print(DTlearner.author())     
-    # pred_y_DT_Learner = DTlearner.query(train_x)  # get the predictions  		
-    # print("DT Learner",pred_y_DT_Learner)
-        
-    # RTlearner = rtl.RTLearner(leaf_size = 1, verbose = False)  # create a RTLearner  		  	   		  		 		  		  		    	 		 		   		 		  
-    # RTlearner.add_evidence(train_x, train_y)  # train it  		  	   		  		 		  		  		    	 		 		   		 		  
-    # print(RTlearner.author())     
-    # pred_y_RT_Learner = RTlearner.query(train_x)  # get the predictions  	
-    # print("RT Learner", pred_y_RT_Learner)
-    
-    # Baglearner = bl.BagLearner(learner = dtl.DTLearner, kwargs = {"leaf_size":1}, bags = 20, boost = False, verbose = False)  # create a BagLearner  		  	   		  		 		  		  		    	 		 		   		 		  
-    # Baglearner.add_evidence(train_x, train_y)  # train it  		  	   		  		 		  		  		    	 		 		   		 		  
-    # print(Baglearner.author())     
-    # pred_y_Bag_Learner = Baglearner.query(train_x)  # get the predictions  	
-    # print("Bag Learner", pred_y_Bag_Learner)
-    
-    # Insanelearner = il.InsaneLearner(verbose = False)  # create a Insane Learner  		  	   		  		 		  		  		    	 		 		   		 		  
-    # Insanelearner.add_evidence(train_x, train_y)  # train it  		  	   		  		 		  		  		    	 		 		   		 		  
-    # print(Insanelearner.author())     
-    # pred_y_Insanelearner = Insanelearner.query(train_x)  # get the predictions  	
-    # print("Insane Learner", pred_y_Insanelearner)
-    
+  		  	   		  		 		  		  		    	 		 		   		 		      		 		  		  		  	   		  		 		  		  		    	 		 		   		 		      
 
     # Experiment 1
     # initialize variables
@@ -113,15 +62,13 @@ if __name__ == "__main__":
     dt_outsample_mae_list = []
     rt_insample_mae_list = []
     rt_outsample_mae_list = []
-    dt_insample_mape_list = []
-    dt_outsample_mape_list = []
-    rt_insample_mape_list = []
-    rt_outsample_mape_list = []
-
     bag_learner_insample_rmse_list = []
     bag_learner_outsample_rmse_list = []
     dt_time_list = []
     rt_time_list = []
+    dt_time_list_query = []
+    rt_time_list_query = []
+
     max_leafsize = 100
     
     # Experiment 1
@@ -152,7 +99,6 @@ if __name__ == "__main__":
     plt.savefig('Experiment1.png')
     plt.clf()
     
-    
     # Experiment 2 
     # Run BagLearner usuing DTLearner with different leaf_sizes and fixed bags
     for leafsize in range(max_leafsize):
@@ -176,10 +122,9 @@ if __name__ == "__main__":
     plt.ylabel('RMSE')
     plt.legend(["In Sample RMSE", "Out Sample RMSE"])
     plt.grid(True)
-    plt.title('BagLearner using DTLearner RMSE using different Leaf Sizes and 20 bags')
+    plt.title('BagLearner using DTLearner RMSE using different Leaf Sizes and 10 bags')
     plt.savefig('Experiment2.png')
-    plt.clf()
-	 		  	   	
+    plt.clf()	  	   	
            
     # Experiment 3
     # Run DTLearner with different leaf_sizes
@@ -195,8 +140,12 @@ if __name__ == "__main__":
         dt_learner_in_sample_pred_y = dt_learner.query(train_x)  # get the predictions
         
         # evaluate out of sample rmse & std
+        start_time = time.time()
         dt_leaner_out_sample_pred_y = dt_learner.query(test_x)
-        
+        end_time = time.time()
+        time_taken = end_time - start_time
+        dt_time_list_query.append(time_taken)
+
         # Calculate the Mean Absolute Error (MAE) by taking the average of absolute errors
         for actual, predicted in zip(train_x, dt_learner_in_sample_pred_y):
             dt_learner_in_sample_absolute_errors = abs(actual - predicted) 
@@ -205,20 +154,7 @@ if __name__ == "__main__":
         for actual, predicted in zip(test_x, dt_leaner_out_sample_pred_y):
             dt_learner_out_sample_absolute_errors = abs(actual - predicted) 
         dt_outsample_mae_list.append(sum(dt_learner_out_sample_absolute_errors) / len(dt_learner_out_sample_absolute_errors))
-        
-        # Calculate the absolute percentage errors for each pair of actual and predicted values
-        for actual, predicted in zip(train_x, dt_learner_in_sample_pred_y):
-            dt_learner_absolute_percentage_errors_in_sample = np.abs((actual - predicted) / predicted)
-        # Calculate the Mean Absolute Percentage Error (MAPE) by taking the average of absolute percentage errors
-        dt_insample_mape_list.append(np.mean(dt_learner_absolute_percentage_errors_in_sample) * 100)  # Multiply by 100 to express as a percentage
-        
-        for actual, predicted in zip(test_x, dt_leaner_out_sample_pred_y):
-        # Calculate the absolute percentage errors for each pair of actual and predicted values
-            dt_learner_absolute_percentage_errors_out_sample = np.abs((actual - predicted) / predicted)
-        # Calculate the Mean Absolute Percentage Error (MAPE) by taking the average of absolute percentage errors
-        dt_outsample_mape_list.append(np.mean(dt_learner_absolute_percentage_errors_out_sample) * 100)  # Multiply by 100 to express as a percentage
-
-    
+            
     # Run RTLearner with different leaf_sizes
     for leafsize in range(max_leafsize):
         start_time = time.time()
@@ -232,7 +168,11 @@ if __name__ == "__main__":
         rt_learner_in_sample_pred_y = rt_learner.query(train_x)  # get the predictions
         
         # evaluate out of sample rmse & std
+        start_time = time.time()
         rt_learner_out_sample_pred_y = rt_learner.query(test_x)
+        end_time = time.time()
+        time_taken = end_time - start_time
+        rt_time_list_query.append(time_taken)
                 
         # Calculate the Mean Absolute Error (MAE) by taking the average of absolute errors
         for actual, predicted in zip(train_x, rt_learner_in_sample_pred_y):
@@ -243,26 +183,16 @@ if __name__ == "__main__":
             rt_learner_out_sample_absolute_errors = abs(actual - predicted) 
         rt_outsample_mae_list.append(sum(rt_learner_out_sample_absolute_errors) / len(rt_learner_out_sample_absolute_errors))
         
-        # Calculate the absolute percentage errors for each pair of actual and predicted values
-        for actual, predicted in zip(train_x, rt_learner_in_sample_pred_y):
-            rt_learner_absolute_percentage_errors_in_sample = np.abs((actual - predicted) / predicted)
-        rt_insample_mape_list.append(np.mean(rt_learner_absolute_percentage_errors_in_sample) * 100)  # Multiply by 100 to express as a percentage
-        
-        for actual, predicted in zip(test_x, rt_learner_out_sample_pred_y):
-            rt_learner_absolute_percentage_errors_out_sample = np.abs((actual - predicted) / predicted)
-        # Calculate the Mean Absolute Percentage Error (MAPE) by taking the average of absolute percentage errors
-        rt_outsample_mape_list.append(np.mean(rt_learner_absolute_percentage_errors_out_sample) * 100)  # Multiply by 100 to express as a percentage
-
-
-
-                	 		  	   		  		 		  		  		    	 		 		   		 		
     plt.plot(dt_time_list)
     plt.plot(rt_time_list)
+    plt.plot(dt_time_list_query)
+    plt.plot(rt_time_list_query)
+
     plt.xlabel('Leaf Size')
     plt.ylabel('Time')
-    plt.legend(["Decision Tree Learner", "Random Tree Learner"])
+    plt.legend(["Train DT Tree Learner", "Train RT Learner","Query DT Tree Learner","Query RT Tree Learner"])
     plt.grid(True)
-    plt.title('Decision Tree vs Random Tree Learners Run Time Comparision')
+    plt.title('Decision Tree vs Random Tree Learners Run Time Comparision for Training')
     plt.savefig('Experiment3.1.png')
     plt.clf()
     
@@ -270,9 +200,9 @@ if __name__ == "__main__":
     plt.plot(dt_insample_mae_list)
     plt.xlabel('Leaf Size')
     plt.ylabel('Mean Absolute Error')
-    plt.legend(["Random Tree In-sample", "Decision Tree In-sample"])
+    plt.legend(["Random Tree Learner", "Decision Tree Learner"])
     plt.grid(True)
-    plt.title('Mean Absolute Error between DTLearner and RTLearner In-Sample')
+    plt.title('Mean Absolute Error using In-Sample')
     plt.savefig('Experiment3.2.png')
     plt.clf()
     
@@ -280,28 +210,8 @@ if __name__ == "__main__":
     plt.plot(dt_outsample_mae_list)
     plt.xlabel('Leaf Size')
     plt.ylabel('Mean Absolute Error')
-    plt.legend(["Random Tree Out-sample", "Decision Tree Out-sample"])
+    plt.legend(["Random Tree Learner", "Decision Tree Learner"])
     plt.grid(True)
-    plt.title('Mean Absolute Error between between DTLearner and RTLearner Out-Sample')
+    plt.title('Mean Absolute Error using Out-Sample')
     plt.savefig('Experiment3.3.png')
-    plt.clf()
-    
-    plt.plot(rt_insample_mape_list)
-    plt.plot(dt_insample_mape_list)
-    plt.xlabel('Leaf Size')
-    plt.ylabel(' Mean Absolute Percentage Error')
-    plt.legend(["Random Tree In-sample", "Decision Tree In-sample"])
-    plt.grid(True)
-    plt.title('Mean Absolute Percentage Error between DTLearner and RTLearner In-Sample')
-    plt.savefig('Experiment3.4.png')
-    plt.clf()
-    
-    plt.plot(rt_outsample_mape_list)
-    plt.plot(dt_outsample_mape_list)
-    plt.xlabel('Leaf Size')
-    plt.ylabel('Mean Absolute Percentage Error')
-    plt.legend(["Random Tree Out-sample", "Decision Tree Out-sample"])
-    plt.grid(True)
-    plt.title('Mean Absolute Percentage Error between DTLearner and RTLearner Out-Sample')
-    plt.savefig('Experiment3.5.png')
     plt.clf()
